@@ -1,15 +1,14 @@
 import streamlit as st
-from pathlib import Path
 import pandas as pd
 
-# ---------- CONFIGURACIÓN GENERAL DE LA PÁGINA ----------
+# ---------- CONFIGURACIÓN GENERAL ----------
 st.set_page_config(
     page_title="7 Hábitos - Proyecto Final",
     page_icon="📘",
     layout="wide"
 )
 
-# ---------- ESTILOS PERSONALIZADOS ----------
+# ---------- ESTILOS PERSONALIZADOS (TODO DENTRO DEL MAIN) ----------
 CUSTOM_CSS = """
 <style>
 /* Fondo suave */
@@ -17,7 +16,7 @@ CUSTOM_CSS = """
     background: linear-gradient(135deg, #f9fafb 0%, #e0f4ff 40%, #fef3c7 100%);
 }
 
-/* Contenedor tipo tarjeta */
+/* Tarjeta principal de cada hábito */
 .habit-card {
     background-color: #ffffffcc;
     padding: 1.7rem;
@@ -70,38 +69,50 @@ h1, h2, h3 {
     border-radius: 1rem;
     text-align: center;
 }
+
+/* "Imagen" conceptual hecha solo con CSS */
+.concept-card {
+    background: radial-gradient(circle at top left, #bfdbfe 0, #1d4ed8 40%, #0f172a 100%);
+    border-radius: 1.3rem;
+    padding: 1.3rem;
+    color: #e5e7eb;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.5);
+}
+.concept-emoji {
+    font-size: 2.7rem;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+.concept-title {
+    font-weight: 700;
+    font-size: 1rem;
+}
+.concept-text {
+    font-size: 0.8rem;
+    margin-top: 0.4rem;
+}
+
+/* Pequeño contenedor tipo “sticker” para tips */
+.sticker {
+    background: #f1f5f9;
+    border-radius: 0.8rem;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+    border: 1px dashed #cbd5f5;
+}
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 
-# ---------- HELPERS PARA IMAGEN Y AUDIO ----------
-def show_image(image_name: str):
-    """Muestra una imagen si existe; si no, un mensaje guía."""
-    img_path = Path("images") / image_name
-    if img_path.is_file():
-        st.image(str(img_path), use_column_width=True)
-    else:
-        st.info("🖼️ Aquí puedes agregar una imagen relacionada con este hábito. "
-                f"Crea `images/{image_name}` en tu repositorio.")
-
-
-def show_audio(audio_name: str):
-    """Muestra un audio si existe; si no, un mensaje guía."""
-    audio_path = Path("audio") / audio_name
-    if audio_path.is_file():
-        st.audio(str(audio_path))
-    else:
-        st.caption("🎙️ (Espacio para un breve audio/voice note del equipo sobre este hábito)")
-
-
-# ---------- CONTENIDO DE LOS HÁBITOS (TEXTO DEL EQUIPO) ----------
+# ---------- CONTENIDO DE LOS HÁBITOS ----------
 habits = {
     1: {
         "title": "Ser proactivo",
         "icon": "🔥",
-        "image": "habito1_proactivo.png",
-        "audio": "habito1_proactivo.mp3",
+        "concept": "Tomar la iniciativa",
+        "concept_text": "Responsabilidad personal y acción sin excusas.",
         "explicacion": (
             "Ser proactivo es asumir la responsabilidad de lo que hacemos y decidir conscientemente "
             "cómo actuar frente a cada situación. Las personas proactivas no esperan que alguien más "
@@ -124,8 +135,8 @@ habits = {
     2: {
         "title": "Comenzar con un fin en mente",
         "icon": "🎯",
-        "image": "habito2_fin_en_mente.png",
-        "audio": "habito2_fin_en_mente.mp3",
+        "concept": "Visión a futuro",
+        "concept_text": "Claridad de metas y dirección del proyecto.",
         "explicacion": (
             "Implica tener una visión clara de hacia dónde se quiere llegar. Significa planificar con "
             "base en metas a largo plazo y orientar las acciones diarias hacia ese propósito. Quien "
@@ -146,8 +157,8 @@ habits = {
     3: {
         "title": "Poner primero lo primero",
         "icon": "⏱️",
-        "image": "habito3_primero_lo_primero.png",
-        "audio": "habito3_primero_lo_primero.mp3",
+        "concept": "Priorizar lo esencial",
+        "concept_text": "Tiempo invertido en lo que realmente suma.",
         "explicacion": (
             "Este hábito trata sobre priorizar lo más importante en lugar de distraerse con lo urgente "
             "o lo trivial. Se basa en la gestión del tiempo y la disciplina personal. Implica enfocarse "
@@ -168,8 +179,8 @@ habits = {
     4: {
         "title": "Pensar en ganar/ganar",
         "icon": "🤝",
-        "image": "habito4_ganar_ganar.png",
-        "audio": "habito4_ganar_ganar.mp3",
+        "concept": "Todos ganan",
+        "concept_text": "Acuerdos donde cada parte se siente valorada.",
         "explicacion": (
             "Consiste en buscar soluciones donde todos los involucrados salgan beneficiados. No se trata "
             "de competir, sino de colaborar con una mentalidad de abundancia: creer que el éxito de uno "
@@ -190,8 +201,8 @@ habits = {
     5: {
         "title": "Buscar primero entender, luego ser entendido",
         "icon": "👂",
-        "image": "habito5_entender.png",
-        "audio": "habito5_entender.mp3",
+        "concept": "Escucha empática",
+        "concept_text": "Comprender antes de responder.",
         "explicacion": (
             "Este hábito enseña que antes de expresar tu punto de vista, debes escuchar realmente a los "
             "demás. La escucha empática ayuda a construir confianza y comprensión mutua. Solo cuando "
@@ -211,8 +222,8 @@ habits = {
     6: {
         "title": "Sinergizar",
         "icon": "🧩",
-        "image": "habito6_sinergia.png",
-        "audio": "habito6_sinergia.mp3",
+        "concept": "Mejor juntos",
+        "concept_text": "La suma del equipo supera a cada individuo.",
         "explicacion": (
             "La sinergia se produce cuando las fortalezas individuales se combinan para generar resultados "
             "que nadie podría lograr solo. Supone valorar las diferencias, respetar los distintos puntos "
@@ -232,8 +243,8 @@ habits = {
     7: {
         "title": "Afilar la sierra",
         "icon": "🪵",
-        "image": "habito7_afilar_sierra.png",
-        "audio": "habito7_afilar_sierra.mp3",
+        "concept": "Renovarse",
+        "concept_text": "Cuidar cuerpo, mente, corazón y espíritu.",
         "explicacion": (
             "Significa dedicar tiempo al autocuidado y la mejora continua en cuatro áreas: cuerpo, mente, "
             "corazón y espíritu. Una persona que no se renueva se desgasta y pierde motivación. "
@@ -253,7 +264,7 @@ habits = {
 }
 
 texto_evidencia = (
-    "A lo largo del proceso, el equipo formado por Juan Pablo, Alejandro y Mateo mostró "
+    "A lo largo del proceso, el equipo formado por **Juan Pablo, Alejandro y Mateo** mostró "
     "una evolución notable:\n\n"
     "- **Inicio:** Existía desorganización y dificultad para coordinar tiempos.\n"
     "- **Durante el proceso:** Aplicaron los hábitos de Covey para mejorar su comunicación y productividad. "
@@ -268,24 +279,20 @@ texto_evidencia = (
 # ---------- FUNCIÓN PARA MOSTRAR UN HÁBITO ----------
 def render_habit(habit_number: int):
     data = habits[habit_number]
-    st.markdown(
-        f"<div class='habit-card'>",
-        unsafe_allow_html=True
-    )
+    st.markdown("<div class='habit-card'>", unsafe_allow_html=True)
 
     cols = st.columns([2, 1])
     with cols[0]:
-        st.markdown(
-            f"### {data['icon']} Hábito {habit_number}: {data['title']}"
-        )
+        st.markdown(f"### {data['icon']} Hábito {habit_number}: {data['title']}")
         st.markdown(
             "<span class='badge'>Explicación</span> "
             "<span class='badge'>Ejemplo del equipo</span> "
             "<span class='badge'>Habilidades gerenciales</span>",
             unsafe_allow_html=True
         )
+
         st.write("")
-        st.markdown(f"**🌟 Explicación**")
+        st.markdown("**🌟 Explicación**")
         st.write(data["explicacion"])
 
         with st.expander("📌 Ejemplo del equipo", expanded=True):
@@ -296,7 +303,7 @@ def render_habit(habit_number: int):
 
         st.write("")
         st.markdown("**🔑 Palabras clave del hábito:**")
-        st.write(", ".join([f"`{k}`" for k in data["keywords"]]))
+        st.write(", ".join([f\"`{k}`\" for k in data["keywords"]]))
 
         st.write("")
         st.markdown("**💭 Reflexión personal rápida**")
@@ -307,16 +314,17 @@ def render_habit(habit_number: int):
         )
 
     with cols[1]:
-        st.markdown("#### 🎨 Imagen del hábito")
-        show_image(data["image"])
-
-        st.markdown("#### 🎧 Voz del equipo")
-        show_audio(data["audio"])
-
-        st.markdown("#### 📲 Idea para recurso extra")
-        st.caption(
-            "👉 Aquí podrías añadir un código QR que lleve a un meme, un reel corto o una foto del equipo "
-            "aplicando este hábito."
+        st.markdown("#### 🎨 Imagen conceptual del hábito")
+        st.markdown(
+            f\"\"\"\n<div class='concept-card'>\n  <span class='concept-emoji'>{data['icon']}</span>\n  <span class='concept-title'>{data['concept']}</span>\n  <div class='concept-text'>{data['concept_text']}</div>\n</div>\n\"\"\" ,
+            unsafe_allow_html=True
+        )
+        st.write("")
+        st.markdown("#### 💡 Tip rápido")
+        st.markdown(
+            "<div class='sticker'>Piensa en una situación reciente del equipo donde este hábito marcó "
+            "la diferencia. ¿Qué habría pasado si no se hubiera aplicado?</div>",
+            unsafe_allow_html=True
         )
 
     st.markdown("</div>", unsafe_allow_html=True)
@@ -332,13 +340,13 @@ def render_home():
         st.markdown(
             "Esta página muestra cómo el equipo **Juan Pablo – Alejandro – Mateo** "
             "creció durante el semestre aplicando los 7 hábitos de Stephen Covey. "
-            "Cada sección combina texto, imágenes y espacios de reflexión para conectar "
+            "Cada sección combina texto, tarjetas visuales y espacios de reflexión para conectar "
             "los hábitos con el liderazgo y la gestión en la vida real."
         )
 
         st.markdown(
-            "<span class='highlight'>Explora cada hábito desde el menú lateral, escucha las voces del equipo y "
-            "evalúa qué tanto lo aplicas tú también.</span>",
+            "<span class='highlight'>Explora cada hábito desde el menú lateral, reflexiona sobre los ejemplos "
+            "del equipo y evalúa qué tanto los aplicas tú también.</span>",
             unsafe_allow_html=True
         )
 
@@ -346,7 +354,7 @@ def render_home():
         st.markdown("### 🧭 Mapa rápido de la página")
         st.markdown(
             "- **Inicio:** visión general del proyecto.\n"
-            "- **Hábitos 1–7:** explicación, ejemplo del equipo, conexión gerencial e imágenes.\n"
+            "- **Hábitos 1–7:** explicación, ejemplo del equipo, conexión gerencial y tarjeta visual.\n"
             "- **Evidencia de colaboración:** resumen de cómo evolucionó el equipo.\n"
             "- **Autoevaluación:** herramienta interactiva para valorar tus propios hábitos."
         )
@@ -395,16 +403,15 @@ def render_evidence():
     st.markdown("## 🤝 Evidencia de colaboración y crecimiento del equipo")
     st.write(texto_evidencia)
     st.write("")
-    st.markdown("### 📸 Momento favorito del equipo")
-    st.caption(
-        "Aquí puedes añadir una imagen grupal del equipo al terminar el proyecto "
-        "(por ejemplo, `images/equipo_final.png`)."
+    st.markdown("### 💬 Frase que resume la experiencia")
+    st.markdown(
+        "> “Pasamos de organizarnos a la carrera a trabajar como un equipo que planea, se escucha y "
+        "se apoya para lograr sus metas.”"
     )
-    show_image("equipo_final.png")
     st.markdown("</div>", unsafe_allow_html=True)
 
 
-# ---------- SECCIÓN AUTOEVALUACIÓN INTERACTIVA ----------
+# ---------- SECCIÓN AUTOEVALUACIÓN ----------
 def render_self_assessment():
     st.markdown("<div class='habit-card'>", unsafe_allow_html=True)
     st.markdown("## 📊 Autoevaluación de hábitos")
@@ -464,7 +471,7 @@ def main():
 
     st.sidebar.markdown("---")
     st.sidebar.markdown("**Equipo:** Juan Pablo · Alejandro · Mateo")
-    st.sidebar.caption("Recurso creado para mostrar crecimiento como futuros líderes.")
+    st.sidebar.caption("Recurso digital creado para mostrar el crecimiento del equipo como futuros líderes.")
 
     if section == "Inicio":
         render_home()
