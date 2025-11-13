@@ -1,22 +1,22 @@
 import streamlit as st
+from pathlib import Path
 import pandas as pd
 
-# ---------- CONFIGURACIÓN GENERAL ----------
+# ---------- CONFIGURACIÓN GENERAL DE LA PÁGINA ----------
 st.set_page_config(
     page_title="7 Hábitos - Proyecto Final",
     page_icon="📘",
     layout="wide"
 )
 
-# ---------- ESTILOS PERSONALIZADOS (TODO DENTRO DEL MAIN) ----------
+# ---------- ESTILOS PERSONALIZADOS ----------
 CUSTOM_CSS = """
 <style>
-/* Fondo suave */
 .main {
     background: linear-gradient(135deg, #f9fafb 0%, #e0f4ff 40%, #fef3c7 100%);
 }
 
-/* Tarjeta principal de cada hábito */
+/* Contenedor tipo tarjeta */
 .habit-card {
     background-color: #ffffffcc;
     padding: 1.7rem;
@@ -54,14 +54,14 @@ h1, h2, h3 {
     margin-right: 8px;
 }
 
-/* Pequeño resaltado */
+/* Resaltado */
 .highlight {
     background: #fef9c3;
     padding: 0.15rem 0.4rem;
     border-radius: 0.4rem;
 }
 
-/* Contenedor de métrica */
+/* Métricas */
 .metric-box {
     background: #0f172a;
     color: white;
@@ -70,30 +70,7 @@ h1, h2, h3 {
     text-align: center;
 }
 
-/* "Imagen" conceptual hecha solo con CSS */
-.concept-card {
-    background: radial-gradient(circle at top left, #bfdbfe 0, #1d4ed8 40%, #0f172a 100%);
-    border-radius: 1.3rem;
-    padding: 1.3rem;
-    color: #e5e7eb;
-    text-align: center;
-    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.5);
-}
-.concept-emoji {
-    font-size: 2.7rem;
-    display: block;
-    margin-bottom: 0.3rem;
-}
-.concept-title {
-    font-weight: 700;
-    font-size: 1rem;
-}
-.concept-text {
-    font-size: 0.8rem;
-    margin-top: 0.4rem;
-}
-
-/* Pequeño contenedor tipo “sticker” para tips */
+/* Nota tipo sticker */
 .sticker {
     background: #f1f5f9;
     border-radius: 0.8rem;
@@ -106,13 +83,27 @@ h1, h2, h3 {
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 
+# ---------- HELPERS PARA IMAGEN ----------
+def show_image(image_name: str):
+    """
+    Busca la imagen en la MISMA CARPETA donde está app.py.
+    Ej: habito1_proactivo.png
+    """
+    img_path = Path(image_name)
+    if img_path.is_file():
+        st.image(str(img_path), use_column_width=True)
+    else:
+        st.info(
+            f"🖼️ Sube un archivo llamado `{image_name}` a la raíz del repo para ver la imagen aquí."
+        )
+
+
 # ---------- CONTENIDO DE LOS HÁBITOS ----------
 habits = {
     1: {
         "title": "Ser proactivo",
         "icon": "🔥",
-        "concept": "Tomar la iniciativa",
-        "concept_text": "Responsabilidad personal y acción sin excusas.",
+        "image": "habito1_proactivo.png",
         "explicacion": (
             "Ser proactivo es asumir la responsabilidad de lo que hacemos y decidir conscientemente "
             "cómo actuar frente a cada situación. Las personas proactivas no esperan que alguien más "
@@ -135,8 +126,7 @@ habits = {
     2: {
         "title": "Comenzar con un fin en mente",
         "icon": "🎯",
-        "concept": "Visión a futuro",
-        "concept_text": "Claridad de metas y dirección del proyecto.",
+        "image": "habito2_fin_en_mente.png",
         "explicacion": (
             "Implica tener una visión clara de hacia dónde se quiere llegar. Significa planificar con "
             "base en metas a largo plazo y orientar las acciones diarias hacia ese propósito. Quien "
@@ -157,8 +147,7 @@ habits = {
     3: {
         "title": "Poner primero lo primero",
         "icon": "⏱️",
-        "concept": "Priorizar lo esencial",
-        "concept_text": "Tiempo invertido en lo que realmente suma.",
+        "image": "habito3_primero_lo_primero.png",
         "explicacion": (
             "Este hábito trata sobre priorizar lo más importante en lugar de distraerse con lo urgente "
             "o lo trivial. Se basa en la gestión del tiempo y la disciplina personal. Implica enfocarse "
@@ -179,8 +168,7 @@ habits = {
     4: {
         "title": "Pensar en ganar/ganar",
         "icon": "🤝",
-        "concept": "Todos ganan",
-        "concept_text": "Acuerdos donde cada parte se siente valorada.",
+        "image": "habito4_ganar_ganar.png",
         "explicacion": (
             "Consiste en buscar soluciones donde todos los involucrados salgan beneficiados. No se trata "
             "de competir, sino de colaborar con una mentalidad de abundancia: creer que el éxito de uno "
@@ -201,8 +189,7 @@ habits = {
     5: {
         "title": "Buscar primero entender, luego ser entendido",
         "icon": "👂",
-        "concept": "Escucha empática",
-        "concept_text": "Comprender antes de responder.",
+        "image": "habito5_entender.png",
         "explicacion": (
             "Este hábito enseña que antes de expresar tu punto de vista, debes escuchar realmente a los "
             "demás. La escucha empática ayuda a construir confianza y comprensión mutua. Solo cuando "
@@ -222,8 +209,7 @@ habits = {
     6: {
         "title": "Sinergizar",
         "icon": "🧩",
-        "concept": "Mejor juntos",
-        "concept_text": "La suma del equipo supera a cada individuo.",
+        "image": "habito6_sinergia.png",
         "explicacion": (
             "La sinergia se produce cuando las fortalezas individuales se combinan para generar resultados "
             "que nadie podría lograr solo. Supone valorar las diferencias, respetar los distintos puntos "
@@ -243,8 +229,7 @@ habits = {
     7: {
         "title": "Afilar la sierra",
         "icon": "🪵",
-        "concept": "Renovarse",
-        "concept_text": "Cuidar cuerpo, mente, corazón y espíritu.",
+        "image": "habito7_afilar_sierra.png",
         "explicacion": (
             "Significa dedicar tiempo al autocuidado y la mejora continua en cuatro áreas: cuerpo, mente, "
             "corazón y espíritu. Una persona que no se renueva se desgasta y pierde motivación. "
@@ -303,7 +288,7 @@ def render_habit(habit_number: int):
 
         st.write("")
         st.markdown("**🔑 Palabras clave del hábito:**")
-        st.write(", ".join([f\"`{k}`\" for k in data["keywords"]]))
+        st.write(", ".join([f"`{k}`" for k in data["keywords"]]))
 
         st.write("")
         st.markdown("**💭 Reflexión personal rápida**")
@@ -314,11 +299,8 @@ def render_habit(habit_number: int):
         )
 
     with cols[1]:
-        st.markdown("#### 🎨 Imagen conceptual del hábito")
-        st.markdown(
-            f\"\"\"\n<div class='concept-card'>\n  <span class='concept-emoji'>{data['icon']}</span>\n  <span class='concept-title'>{data['concept']}</span>\n  <div class='concept-text'>{data['concept_text']}</div>\n</div>\n\"\"\" ,
-            unsafe_allow_html=True
-        )
+        st.markdown("#### 🎨 Imagen del hábito")
+        show_image(data["image"])
         st.write("")
         st.markdown("#### 💡 Tip rápido")
         st.markdown(
@@ -340,7 +322,7 @@ def render_home():
         st.markdown(
             "Esta página muestra cómo el equipo **Juan Pablo – Alejandro – Mateo** "
             "creció durante el semestre aplicando los 7 hábitos de Stephen Covey. "
-            "Cada sección combina texto, tarjetas visuales y espacios de reflexión para conectar "
+            "Cada sección combina texto, imágenes y espacios de reflexión para conectar "
             "los hábitos con el liderazgo y la gestión en la vida real."
         )
 
@@ -354,7 +336,7 @@ def render_home():
         st.markdown("### 🧭 Mapa rápido de la página")
         st.markdown(
             "- **Inicio:** visión general del proyecto.\n"
-            "- **Hábitos 1–7:** explicación, ejemplo del equipo, conexión gerencial y tarjeta visual.\n"
+            "- **Hábitos 1–7:** explicación, ejemplo del equipo, conexión gerencial e imagen.\n"
             "- **Evidencia de colaboración:** resumen de cómo evolucionó el equipo.\n"
             "- **Autoevaluación:** herramienta interactiva para valorar tus propios hábitos."
         )
@@ -379,7 +361,7 @@ def render_home():
         st.markdown("**Semana 1**")
         st.markdown("<span class='timeline-dot'></span> Desorganización inicial", unsafe_allow_html=True)
     with t2:
-        st.markdown("**Semana 4**")
+        st.markmarkdown("**Semana 4**")
         st.markdown("<span class='timeline-dot'></span> Aplican hábitos 1–3", unsafe_allow_html=True)
     with t3:
         st.markdown("**Semana 8**")
@@ -397,7 +379,7 @@ def render_home():
     )
 
 
-# ---------- SECCIÓN EVIDENCIA DE COLABORACIÓN ----------
+# ---------- SECCIÓN EVIDENCIA ----------
 def render_evidence():
     st.markdown("<div class='habit-card'>", unsafe_allow_html=True)
     st.markdown("## 🤝 Evidencia de colaboración y crecimiento del equipo")
@@ -450,7 +432,7 @@ def render_self_assessment():
     st.markdown("</div>", unsafe_allow_html=True)
 
 
-# ---------- SIDEBAR Y ENRUTAMIENTO ----------
+# ---------- SIDEBAR / ENRUTAMIENTO ----------
 def main():
     st.sidebar.title("📚 Navegación")
     section = st.sidebar.radio(
