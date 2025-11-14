@@ -82,7 +82,7 @@ h1, h2, h3 {
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-# ---------------- IMAGE HELPER ----------------
+# ---------------- HELPERS ----------------
 def show_image(image_name: str):
     """
     Looks for the image in the SAME FOLDER as app.py.
@@ -95,6 +95,21 @@ def show_image(image_name: str):
         st.info(
             f"🖼️ Upload a file named `{image_name}` to the root of the repo to display the image here."
         )
+
+
+def show_audio(audio_name: str):
+    """
+    Looks for the audio file in the SAME FOLDER as app.py.
+    Example: audiohabito1.m4a
+    """
+    audio_path = Path(audio_name)
+    if audio_path.is_file():
+        st.audio(str(audio_path))
+    else:
+        st.info(
+            f"🎧 Upload a file named `{audio_name}` to the root of the repo to play the audio here."
+        )
+
 
 # ---------------- HABITS CONTENT ----------------
 habits = {
@@ -299,6 +314,15 @@ def render_habit(habit_number: int):
     with cols[1]:
         st.markdown("#### 🎨 Habit image")
         show_image(data["image"])
+
+        st.write("")
+        st.markdown("#### 🎧 Habit audio")
+        audio_filename = f"audiohabito{habit_number}.m4a"
+        show_audio(audio_filename)
+        st.caption(
+            "Short audio reflection about how this habit has helped us grow and what we have learned from it."
+        )
+
         st.write("")
         st.markdown("#### 💡 Quick tip")
         st.markdown(
@@ -319,12 +343,12 @@ def render_home():
         st.markdown(
             "This page shows how the team **Juan Pablo – Alejandro – Mateo** "
             "grew over the semester by applying Stephen Covey's 7 habits. "
-            "Each section combines text, images, and reflection spaces to connect "
+            "Each section combines text, images, audio, and reflection spaces to connect "
             "the habits with leadership and management in real life."
         )
 
         st.markdown(
-            "<span class='highlight'>Explore each habit using the sidebar, think about the team's examples, "
+            "<span class='highlight'>Explore each habit using the sidebar, listen to the short audios, "
             "and evaluate how much you apply these habits yourself.</span>",
             unsafe_allow_html=True
         )
@@ -333,7 +357,7 @@ def render_home():
         st.markdown("### 🧭 Quick map of the page")
         st.markdown(
             "- **Home:** general overview of the project.\n"
-            "- **Habits 1–7:** explanation, team example, managerial connection, and image.\n"
+            "- **Habits 1–7:** explanation, team example, managerial connection, image, and audio.\n"
             "- **Collaboration evidence:** summary of how the team evolved.\n"
             "- **Self-assessment:** interactive tool to rate your own habits."
         )
@@ -358,7 +382,7 @@ def render_home():
         st.markdown("**Week 1**")
         st.markdown("<span class='timeline-dot'></span> Initial disorganization", unsafe_allow_html=True)
     with t2:
-        st.markdown("**Week 4**")
+        st.markmarkdown("**Week 4**")
         st.markdown("<span class='timeline-dot'></span> Habits 1–3 in action", unsafe_allow_html=True)
     with t3:
         st.markdown("**Week 8**")
@@ -452,12 +476,4 @@ def main():
     if section == "Home":
         render_home()
     elif section.startswith("Habit"):
-        num = int(section.split(" ")[1])
-        render_habit(num)
-    elif section == "Collaboration evidence":
-        render_evidence()
-    elif section == "Self-assessment":
-        render_self_assessment()
-
-if __name__ == "__main__":
-    main()
+        num = int(section.split(
