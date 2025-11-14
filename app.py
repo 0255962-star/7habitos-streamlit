@@ -476,4 +476,12 @@ def main():
     if section == "Home":
         render_home()
     elif section.startswith("Habit"):
-        num = int(section.split(
+        num = int(section.split(" ")[1])
+        render_habit(num)
+    elif section == "Collaboration evidence":
+        render_evidence()
+    elif section == "Self-assessment":
+        render_self_assessment()
+
+if __name__ == "__main__":
+    main()
