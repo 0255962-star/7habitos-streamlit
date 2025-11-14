@@ -2,21 +2,21 @@ import streamlit as st
 from pathlib import Path
 import pandas as pd
 
-# ---------- CONFIGURACIÓN GENERAL DE LA PÁGINA ----------
+# ---------------- GENERAL CONFIGURATION ----------------
 st.set_page_config(
-    page_title="7 Hábitos - Proyecto Final",
+    page_title="7 Habits - Final Project",
     page_icon="📘",
     layout="wide"
 )
 
-# ---------- ESTILOS PERSONALIZADOS ----------
+# ---------------- CSS STYLES ----------------
 CUSTOM_CSS = """
 <style>
 .main {
     background: linear-gradient(135deg, #f9fafb 0%, #e0f4ff 40%, #fef3c7 100%);
 }
 
-/* Contenedor tipo tarjeta */
+/* Card container */
 .habit-card {
     background-color: #ffffffcc;
     padding: 1.7rem;
@@ -39,12 +39,12 @@ CUSTOM_CSS = """
     margin-right: 0.4rem;
 }
 
-/* Títulos */
+/* Titles */
 h1, h2, h3 {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* Línea de tiempo */
+/* Timeline */
 .timeline-dot {
     width: 14px;
     height: 14px;
@@ -54,14 +54,14 @@ h1, h2, h3 {
     margin-right: 8px;
 }
 
-/* Resaltado */
+/* Highlight */
 .highlight {
     background: #fef9c3;
     padding: 0.15rem 0.4rem;
     border-radius: 0.4rem;
 }
 
-/* Métricas */
+/* Metrics */
 .metric-box {
     background: #0f172a;
     color: white;
@@ -70,7 +70,7 @@ h1, h2, h3 {
     text-align: center;
 }
 
-/* Nota tipo sticker */
+/* Sticker-like note */
 .sticker {
     background: #f1f5f9;
     border-radius: 0.8rem;
@@ -82,330 +82,325 @@ h1, h2, h3 {
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-
-# ---------- HELPERS PARA IMAGEN ----------
+# ---------------- IMAGE HELPER ----------------
 def show_image(image_name: str):
     """
-    Busca la imagen en la MISMA CARPETA donde está app.py.
-    Ej: habito1_proactivo.png
+    Looks for the image in the SAME FOLDER as app.py.
+    Example: habito1_proactivo.png
     """
     img_path = Path(image_name)
     if img_path.is_file():
         st.image(str(img_path), use_column_width=True)
     else:
         st.info(
-            f"🖼️ Sube un archivo llamado `{image_name}` a la raíz del repo para ver la imagen aquí."
+            f"🖼️ Upload a file named `{image_name}` to the root of the repo to display the image here."
         )
 
-
-# ---------- CONTENIDO DE LOS HÁBITOS ----------
+# ---------------- HABITS CONTENT ----------------
 habits = {
     1: {
-        "title": "Ser proactivo",
+        "title": "Be Proactive",
         "icon": "🔥",
         "image": "habito1_proactivo.png",
         "explicacion": (
-            "Ser proactivo es asumir la responsabilidad de lo que hacemos y decidir conscientemente "
-            "cómo actuar frente a cada situación. Las personas proactivas no esperan que alguien más "
-            "resuelva sus problemas; toman la iniciativa y buscan soluciones sin excusas. "
-            "Este hábito significa elegir una actitud positiva incluso ante las dificultades."
+            "Being proactive means taking responsibility for what we do and consciously deciding how "
+            "to act in each situation. Proactive people do not wait for someone else to solve their "
+            "problems; they take initiative and look for solutions without excuses. "
+            "This habit is about choosing a positive attitude even in the face of difficulties."
         ),
         "ejemplo": (
-            "En las primeras semanas del proyecto, el grupo tuvo dificultades para coordinar horarios. "
-            "Juan Pablo decidió no esperar a que el profesor interviniera: creó un grupo en línea para "
-            "organizar las reuniones y propuso un calendario semanal. Su iniciativa permitió que el "
-            "equipo retomara el ritmo de trabajo y mejorara la comunicación."
+            "During the first weeks of the project, the team struggled to coordinate schedules. "
+            "Juan Pablo decided not to wait for the professor to intervene: he created an online group "
+            "to organize meetings and proposed a weekly calendar. His initiative helped the team regain "
+            "its work rhythm and improve communication."
         ),
         "conexion": (
-            "Este hábito está directamente relacionado con la responsabilidad, la autogestión y "
-            "el liderazgo proactivo. En el ámbito gerencial, una persona proactiva detecta problemas "
-            "antes de que se agraven y actúa sin esperar órdenes."
+            "This habit is directly related to responsibility, self-management, and proactive leadership. "
+            "In management, a proactive person identifies problems before they escalate and acts without "
+            "waiting for orders."
         ),
-        "keywords": ["Responsabilidad", "Iniciativa", "Autogestión"]
+        "keywords": ["Responsibility", "Initiative", "Self-management"]
     },
     2: {
-        "title": "Comenzar con un fin en mente",
+        "title": "Begin With the End in Mind",
         "icon": "🎯",
         "image": "habito2_fin_en_mente.png",
         "explicacion": (
-            "Implica tener una visión clara de hacia dónde se quiere llegar. Significa planificar con "
-            "base en metas a largo plazo y orientar las acciones diarias hacia ese propósito. Quien "
-            "“comienza con un fin en mente” sabe qué quiere lograr y actúa con enfoque."
+            "This habit means having a clear vision of where you want to go. It implies planning based on "
+            "long-term goals and aligning daily actions with that purpose. A person who begins with the "
+            "end in mind knows what they want to achieve and acts with focus."
         ),
         "ejemplo": (
-            "Desde el inicio, Alejandro propuso que el objetivo del grupo fuera entregar un proyecto "
-            "que no solo cumpliera los requisitos, sino que destacara por su creatividad. Para lograrlo, "
-            "elaboró un esquema de trabajo que incluía metas semanales, revisión de avances y roles "
-            "definidos. Esta visión ayudó al equipo a mantenerse enfocado hasta el final."
+            "From the very beginning, Alejandro suggested that the group's goal should be to deliver a project "
+            "that not only met the requirements but also stood out for its creativity. To achieve this, he "
+            "designed a work plan with weekly goals, progress reviews, and defined roles. This vision helped "
+            "the team stay focused until the end."
         ),
         "conexion": (
-            "Desarrolla la planeación estratégica, la visión a futuro y la orientación a resultados, "
-            "esenciales en cualquier líder o gerente que busque dirigir proyectos con éxito."
+            "It develops strategic planning, future vision, and results orientation—essential skills for any "
+            "leader or manager who wants to successfully guide projects."
         ),
-        "keywords": ["Visión", "Planeación estratégica", "Resultados"]
+        "keywords": ["Vision", "Strategic planning", "Results"]
     },
     3: {
-        "title": "Poner primero lo primero",
+        "title": "Put First Things First",
         "icon": "⏱️",
         "image": "habito3_primero_lo_primero.png",
         "explicacion": (
-            "Este hábito trata sobre priorizar lo más importante en lugar de distraerse con lo urgente "
-            "o lo trivial. Se basa en la gestión del tiempo y la disciplina personal. Implica enfocarse "
-            "en actividades que aporten verdadero valor al objetivo final."
+            "This habit is about prioritizing what is most important instead of getting distracted by what is "
+            "merely urgent or trivial. It is based on time management and personal discipline. It means focusing "
+            "on activities that truly contribute to the final objective."
         ),
         "ejemplo": (
-            "Cuando se acercaba la fecha de entrega, Mateo notó que algunos querían dedicar tiempo a "
-            "detalles visuales antes de terminar la investigación. Él propuso centrarse primero en "
-            "completar el contenido principal y luego perfeccionar la presentación. Esa decisión permitió "
-            "cumplir los plazos sin descuidar la calidad."
+            "As the deadline approached, Mateo noticed that some teammates wanted to spend time on visual "
+            "details before finishing the research. He suggested focusing first on completing the main content "
+            "and then refining the presentation. That decision allowed them to meet the deadline without "
+            "sacrificing quality."
         ),
         "conexion": (
-            "Refuerza la organización, la gestión del tiempo y la eficiencia en la toma de decisiones, "
-            "competencias clave para dirigir proyectos y equipos de trabajo."
+            "It reinforces organization, time management, and efficiency in decision-making—key competencies "
+            "for leading projects and work teams."
         ),
-        "keywords": ["Prioridades", "Gestión del tiempo", "Disciplina"]
+        "keywords": ["Priorities", "Time management", "Discipline"]
     },
     4: {
-        "title": "Pensar en ganar/ganar",
+        "title": "Think Win–Win",
         "icon": "🤝",
         "image": "habito4_ganar_ganar.png",
         "explicacion": (
-            "Consiste en buscar soluciones donde todos los involucrados salgan beneficiados. No se trata "
-            "de competir, sino de colaborar con una mentalidad de abundancia: creer que el éxito de uno "
-            "no significa el fracaso del otro."
+            "This habit means seeking solutions in which everyone involved benefits. It is not about competing, "
+            "but about collaborating with an abundance mindset: believing that one person's success does not mean "
+            "another's failure."
         ),
         "ejemplo": (
-            "En un momento del proyecto, surgió un desacuerdo sobre quién haría la presentación final. "
-            "Juan Pablo sugirió que cada uno presentara una parte según su especialidad: Alejandro la "
-            "introducción, él la parte técnica y Mateo las conclusiones. Así todos participaron y se "
-            "sintieron valorados."
+            "At one point in the project, there was disagreement about who should deliver the final presentation. "
+            "Juan Pablo suggested that each member present a part according to their strengths: Alejandro handled "
+            "the introduction, he presented the technical section, and Mateo presented the conclusions. In this "
+            "way, everyone participated and felt valued."
         ),
         "conexion": (
-            "Está vinculado con la negociación efectiva, la empatía y la gestión colaborativa, cualidades "
-            "esenciales para mantener relaciones laborales equilibradas y equipos motivados."
+            "It is connected to effective negotiation, empathy, and collaborative management—crucial qualities for "
+            "maintaining balanced work relationships and motivated teams."
         ),
-        "keywords": ["Colaboración", "Negociación", "Empatía"]
+        "keywords": ["Collaboration", "Negotiation", "Empathy"]
     },
     5: {
-        "title": "Buscar primero entender, luego ser entendido",
+        "title": "Seek First to Understand, Then to Be Understood",
         "icon": "👂",
         "image": "habito5_entender.png",
         "explicacion": (
-            "Este hábito enseña que antes de expresar tu punto de vista, debes escuchar realmente a los "
-            "demás. La escucha empática ayuda a construir confianza y comprensión mutua. Solo cuando "
-            "entendemos las perspectivas de los demás podemos comunicar las nuestras de manera efectiva."
+            "This habit teaches that before expressing your point of view, you should truly listen to others. "
+            "Empathic listening builds trust and mutual understanding. Only when we understand other perspectives "
+            "can we effectively communicate our own."
         ),
         "ejemplo": (
-            "Durante una reunión, Alejandro y Mateo tenían opiniones opuestas sobre el enfoque del trabajo. "
-            "Juan Pablo propuso que cada uno explicara su punto sin interrupciones y luego buscarían puntos "
-            "en común. Gracias a esa escucha activa, lograron integrar ambas ideas en una propuesta más completa."
+            "In one meeting, Alejandro and Mateo had opposite opinions about the focus of the project. "
+            "Juan Pablo suggested that each of them explain their point without interruptions and that they then "
+            "look for common ground. Thanks to that active listening, they were able to integrate both ideas into "
+            "a more complete proposal."
         ),
         "conexion": (
-            "Fortalece la comunicación empática, la resolución de conflictos y la inteligencia emocional, "
-            "competencias indispensables para liderar equipos diversos y mantener una buena convivencia laboral."
+            "It strengthens empathic communication, conflict resolution, and emotional intelligence—essential "
+            "competencies for leading diverse teams and maintaining a healthy work environment."
         ),
-        "keywords": ["Escucha", "Empatía", "Resolución de conflictos"]
+        "keywords": ["Listening", "Empathy", "Conflict resolution"]
     },
     6: {
-        "title": "Sinergizar",
+        "title": "Synergize",
         "icon": "🧩",
         "image": "habito6_sinergia.png",
         "explicacion": (
-            "La sinergia se produce cuando las fortalezas individuales se combinan para generar resultados "
-            "que nadie podría lograr solo. Supone valorar las diferencias, respetar los distintos puntos "
-            "de vista y trabajar de forma complementaria."
+            "Synergy occurs when individual strengths are combined to produce results that no one could achieve "
+            "alone. It means valuing differences, respecting different points of view, and working in a "
+            "complementary way."
         ),
         "ejemplo": (
-            "Cada miembro del grupo aportó algo distinto: Juan Pablo se destacó en la coordinación y liderazgo, "
-            "Alejandro en la planeación y diseño, y Mateo en la redacción y análisis. Al unir esas habilidades, "
-            "el grupo logró un proyecto equilibrado, innovador y bien presentado."
+            "Each team member contributed something different: Juan Pablo stood out in coordination and leadership, "
+            "Alejandro in planning and design, and Mateo in writing and analysis. By combining these skills, the "
+            "group produced a balanced, innovative, and well-presented project."
         ),
         "conexion": (
-            "Promueve el trabajo en equipo, la diversidad de pensamiento y la creatividad colectiva, "
-            "competencias esenciales para generar innovación en cualquier organización."
+            "It promotes teamwork, diversity of thought, and collective creativity—essential competencies for "
+            "innovation in any organization."
         ),
-        "keywords": ["Trabajo en equipo", "Diversidad", "Creatividad"]
+        "keywords": ["Teamwork", "Diversity", "Creativity"]
     },
     7: {
-        "title": "Afilar la sierra",
+        "title": "Sharpen the Saw",
         "icon": "🪵",
         "image": "habito7_afilar_sierra.png",
         "explicacion": (
-            "Significa dedicar tiempo al autocuidado y la mejora continua en cuatro áreas: cuerpo, mente, "
-            "corazón y espíritu. Una persona que no se renueva se desgasta y pierde motivación. "
-            "“Afilar la sierra” es invertir en ti mismo para mantener tu energía y equilibrio."
+            "This habit means dedicating time to self-care and continuous improvement in four areas: body, mind, "
+            "heart, and spirit. A person who does not renew themselves becomes worn out and loses motivation. "
+            "Sharpening the saw is about investing in yourself to maintain energy and balance."
         ),
         "ejemplo": (
-            "Después de la entrega del proyecto, el grupo decidió reunirse para reflexionar sobre lo aprendido "
-            "y compartir sugerencias para futuros trabajos. También planearon una actividad recreativa juntos. "
-            "Este descanso y retroalimentación fortaleció su relación y los preparó mejor para nuevos retos."
+            "After delivering the project, the group decided to meet to reflect on what they had learned and share "
+            "ideas for future work. They also planned a recreational activity together. This break and feedback "
+            "strengthened their relationship and prepared them better for new challenges."
         ),
         "conexion": (
-            "Refuerza la resiliencia, la adaptabilidad y el aprendizaje continuo. Un buen líder no solo busca "
-            "resultados, sino también el bienestar y el desarrollo personal del equipo."
+            "It reinforces resilience, adaptability, and continuous learning. A good leader not only pursues "
+            "results, but also the well-being and personal development of the team."
         ),
-        "keywords": ["Autocuidado", "Resiliencia", "Aprendizaje continuo"]
+        "keywords": ["Self-care", "Resilience", "Continuous learning"]
     }
 }
 
 texto_evidencia = (
-    "A lo largo del proceso, el equipo formado por **Juan Pablo, Alejandro y Mateo** mostró "
-    "una evolución notable:\n\n"
-    "- **Inicio:** Existía desorganización y dificultad para coordinar tiempos.\n"
-    "- **Durante el proceso:** Aplicaron los hábitos de Covey para mejorar su comunicación y productividad. "
-    "Juan Pablo lideró la organización (Hábito 1), Alejandro aportó visión y planeación (Hábito 2), y "
-    "Mateo se destacó por su enfoque y constancia (Hábito 3).\n"
-    "- **Resultados:** Lograron sinergia real (Hábito 6) y aprendieron a escucharse mutuamente (Hábito 5).\n"
-    "- **Crecimiento:** El grupo pasó de ser un conjunto de individuos a un equipo cohesionado, con metas claras, "
-    "roles definidos y un alto nivel de compromiso."
+    "Throughout the project, the team formed by **Juan Pablo, Alejandro, and Mateo** showed "
+    "remarkable growth:\n\n"
+    "- **Beginning:** There was disorganization and difficulty coordinating schedules.\n"
+    "- **During the process:** They applied Covey's habits to improve communication and productivity. "
+    "Juan Pablo led the organization (Habit 1), Alejandro provided vision and planning (Habit 2), and "
+    "Mateo stood out for his focus and consistency (Habit 3).\n"
+    "- **Results:** They achieved real synergy (Habit 6) and learned to truly listen to each other (Habit 5).\n"
+    "- **Growth:** The group moved from being a set of individuals to a cohesive team with clear goals, "
+    "defined roles, and a high level of commitment."
 )
 
-
-# ---------- FUNCIÓN PARA MOSTRAR UN HÁBITO ----------
+# ---------------- RENDER HABIT ----------------
 def render_habit(habit_number: int):
     data = habits[habit_number]
     st.markdown("<div class='habit-card'>", unsafe_allow_html=True)
 
     cols = st.columns([2, 1])
     with cols[0]:
-        st.markdown(f"### {data['icon']} Hábito {habit_number}: {data['title']}")
+        st.markdown(f"### {data['icon']} Habit {habit_number}: {data['title']}")
         st.markdown(
-            "<span class='badge'>Explicación</span> "
-            "<span class='badge'>Ejemplo del equipo</span> "
-            "<span class='badge'>Habilidades gerenciales</span>",
+            "<span class='badge'>Explanation</span> "
+            "<span class='badge'>Team example</span> "
+            "<span class='badge'>Managerial skills</span>",
             unsafe_allow_html=True
         )
 
         st.write("")
-        st.markdown("**🌟 Explicación**")
+        st.markdown("**🌟 Explanation**")
         st.write(data["explicacion"])
 
-        with st.expander("📌 Ejemplo del equipo", expanded=True):
+        with st.expander("📌 Team example", expanded=True):
             st.write(data["ejemplo"])
 
-        with st.expander("🏢 Conexión con habilidades gerenciales", expanded=False):
+        with st.expander("🏢 Connection with managerial skills", expanded=False):
             st.write(data["conexion"])
 
         st.write("")
-        st.markdown("**🔑 Palabras clave del hábito:**")
+        st.markdown("**🔑 Key words for this habit:**")
         st.write(", ".join([f"`{k}`" for k in data["keywords"]]))
 
         st.write("")
-        st.markdown("**💭 Reflexión personal rápida**")
+        st.markdown("**💭 Quick personal reflection**")
         st.text_area(
-            "¿Cómo has aplicado tú este hábito en tu vida o en otro proyecto?",
+            "How have you applied this habit in your own life or in another project?",
             key=f"reflexion_{habit_number}",
-            placeholder="Escribe aquí tu reflexión (no se guarda, es solo para que pienses mientras exploras la página)."
+            placeholder="Write your reflection here (it is not saved; it is just for you while exploring the page)."
         )
 
     with cols[1]:
-        st.markdown("#### 🎨 Imagen del hábito")
+        st.markdown("#### 🎨 Habit image")
         show_image(data["image"])
         st.write("")
-        st.markdown("#### 💡 Tip rápido")
+        st.markdown("#### 💡 Quick tip")
         st.markdown(
-            "<div class='sticker'>Piensa en una situación reciente del equipo donde este hábito marcó "
-            "la diferencia. ¿Qué habría pasado si no se hubiera aplicado?</div>",
+            "<div class='sticker'>Think about a recent situation in your team where this habit made a "
+            "difference. What would have happened if it had not been applied?</div>",
             unsafe_allow_html=True
         )
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-
-# ---------- SECCIÓN INICIO ----------
+# ---------------- HOME ----------------
 def render_home():
     col1, col2 = st.columns([2.2, 1.2])
     with col1:
-        st.title("📘 7 Hábitos de la Gente Altamente Efectiva")
-        st.subheader("Proyecto final – Opción B: Recurso digital interactivo")
+        st.title("📘 The 7 Habits of Highly Effective People")
+        st.subheader("Final project – Option B: Interactive digital resource")
 
         st.markdown(
-            "Esta página muestra cómo el equipo **Juan Pablo – Alejandro – Mateo** "
-            "creció durante el semestre aplicando los 7 hábitos de Stephen Covey. "
-            "Cada sección combina texto, imágenes y espacios de reflexión para conectar "
-            "los hábitos con el liderazgo y la gestión en la vida real."
+            "This page shows how the team **Juan Pablo – Alejandro – Mateo** "
+            "grew over the semester by applying Stephen Covey's 7 habits. "
+            "Each section combines text, images, and reflection spaces to connect "
+            "the habits with leadership and management in real life."
         )
 
         st.markdown(
-            "<span class='highlight'>Explora cada hábito desde el menú lateral, reflexiona sobre los ejemplos "
-            "del equipo y evalúa qué tanto los aplicas tú también.</span>",
+            "<span class='highlight'>Explore each habit using the sidebar, think about the team's examples, "
+            "and evaluate how much you apply these habits yourself.</span>",
             unsafe_allow_html=True
         )
 
         st.write("")
-        st.markdown("### 🧭 Mapa rápido de la página")
+        st.markdown("### 🧭 Quick map of the page")
         st.markdown(
-            "- **Inicio:** visión general del proyecto.\n"
-            "- **Hábitos 1–7:** explicación, ejemplo del equipo, conexión gerencial e imagen.\n"
-            "- **Evidencia de colaboración:** resumen de cómo evolucionó el equipo.\n"
-            "- **Autoevaluación:** herramienta interactiva para valorar tus propios hábitos."
+            "- **Home:** general overview of the project.\n"
+            "- **Habits 1–7:** explanation, team example, managerial connection, and image.\n"
+            "- **Collaboration evidence:** summary of how the team evolved.\n"
+            "- **Self-assessment:** interactive tool to rate your own habits."
         )
 
     with col2:
         st.markdown(" ")
         st.markdown(" ")
         st.markdown("<div class='metric-box'>", unsafe_allow_html=True)
-        st.markdown("#### 🔍 Datos del proyecto")
+        st.markdown("#### 🔍 Project facts")
         m1, m2, m3 = st.columns(3)
-        m1.metric("Miembros", "3", "equipo")
-        m2.metric("Hábitos", "7")
-        m3.metric("Formato", "Web / Streamlit")
+        m1.metric("Members", "3", "team")
+        m2.metric("Habits", "7")
+        m3.metric("Format", "Web / Streamlit")
         st.write("---")
-        st.caption("Recurso creado como entrega final del curso para conectar los hábitos con habilidades gerenciales.")
+        st.caption("Digital resource created as the final course deliverable to connect the 7 habits with managerial skills.")
         st.markdown("</div>", unsafe_allow_html=True)
 
     st.write("")
-    st.markdown("### 📅 Línea de tiempo del crecimiento del equipo")
+    st.markdown("### 📅 Team growth timeline")
     t1, t2, t3, t4 = st.columns(4)
     with t1:
-        st.markdown("**Semana 1**")
-        st.markdown("<span class='timeline-dot'></span> Desorganización inicial", unsafe_allow_html=True)
+        st.markdown("**Week 1**")
+        st.markdown("<span class='timeline-dot'></span> Initial disorganization", unsafe_allow_html=True)
     with t2:
-        st.markmarkdown("**Semana 4**")
-        st.markdown("<span class='timeline-dot'></span> Aplican hábitos 1–3", unsafe_allow_html=True)
+        st.markdown("**Week 4**")
+        st.markdown("<span class='timeline-dot'></span> Habits 1–3 in action", unsafe_allow_html=True)
     with t3:
-        st.markdown("**Semana 8**")
-        st.markdown("<span class='timeline-dot'></span> Mejor comunicación (hábitos 4–5)", unsafe_allow_html=True)
+        st.markdown("**Week 8**")
+        st.markdown("<span class='timeline-dot'></span> Better communication (Habits 4–5)", unsafe_allow_html=True)
     with t4:
-        st.markdown("**Semana 12**")
-        st.markdown("<span class='timeline-dot'></span> Sinergia y cierre del proyecto", unsafe_allow_html=True)
+        st.markdown("**Week 12**")
+        st.markdown("<span class='timeline-dot'></span> Synergy and project closing", unsafe_allow_html=True)
 
     st.write("")
-    st.markdown("### 🧠 ¿Qué esperas aprender aquí?")
+    st.markdown("### 🧠 What should you get from this resource?")
     st.write(
-        "- Entender cada hábito con ejemplos reales del equipo.\n"
-        "- Ver cómo se conectan con habilidades de liderazgo y gestión.\n"
-        "- Reflexionar sobre tu propia forma de trabajar en equipo."
+        "- Understand each habit through real examples from the team.\n"
+        "- See how the habits connect with leadership and management skills.\n"
+        "- Reflect on your own way of working in teams."
     )
 
-
-# ---------- SECCIÓN EVIDENCIA ----------
+# ---------------- COLLABORATION EVIDENCE ----------------
 def render_evidence():
     st.markdown("<div class='habit-card'>", unsafe_allow_html=True)
-    st.markdown("## 🤝 Evidencia de colaboración y crecimiento del equipo")
+    st.markdown("## 🤝 Evidence of collaboration and team growth")
     st.write(texto_evidencia)
     st.write("")
-    st.markdown("### 💬 Frase que resume la experiencia")
+    st.markdown("### 💬 Quote that summarizes the experience")
     st.markdown(
-        "> “Pasamos de organizarnos a la carrera a trabajar como un equipo que planea, se escucha y "
-        "se apoya para lograr sus metas.”"
+        "> “We went from organizing everything at the last minute to working as a team that plans, "
+        "listens, and supports each other to achieve shared goals.”"
     )
     st.markdown("</div>", unsafe_allow_html=True)
 
-
-# ---------- SECCIÓN AUTOEVALUACIÓN ----------
+# ---------------- SELF-ASSESSMENT ----------------
 def render_self_assessment():
     st.markdown("<div class='habit-card'>", unsafe_allow_html=True)
-    st.markdown("## 📊 Autoevaluación de hábitos")
+    st.markdown("## 📊 7 Habits self-assessment")
 
     st.write(
-        "Mueve los sliders para evaluar qué tanto aplicas cada hábito en tu vida diaria "
-        "(1 = casi nunca, 5 = casi siempre)."
+        "Use the sliders to rate how often you apply each habit in your daily life "
+        "(1 = almost never, 5 = almost always)."
     )
 
     ratings = {}
     for i in range(1, 8):
-        ratings[f"Hábito {i}"] = st.slider(
+        ratings[f"Habit {i}"] = st.slider(
             f"{i}. {habits[i]['title']}",
             min_value=1,
             max_value=5,
@@ -414,57 +409,55 @@ def render_self_assessment():
         )
 
     st.write("")
-    st.markdown("### 🔍 Tu perfil de hábitos")
+    st.markdown("### 🔍 Your habit profile")
 
     df = pd.DataFrame({
-        "Hábito": list(ratings.keys()),
-        "Nivel de aplicación": list(ratings.values())
-    }).set_index("Hábito")
+        "Habit": list(ratings.keys()),
+        "Level of application": list(ratings.values())
+    }).set_index("Habit")
 
     st.bar_chart(df)
 
     st.write("")
-    st.markdown("### ✏️ Resumen personal")
+    st.markdown("### ✏️ Personal summary")
     st.text_area(
-        "Escribe en pocas líneas: ¿qué hábito dominas y cuál quieres fortalecer a partir de ahora?",
+        "In a few lines, which habit do you master the most and which one do you want to strengthen from now on?",
         key="resumen_personal"
     )
     st.markdown("</div>", unsafe_allow_html=True)
 
-
-# ---------- SIDEBAR / ENRUTAMIENTO ----------
+# ---------------- MAIN / SIDEBAR ----------------
 def main():
-    st.sidebar.title("📚 Navegación")
+    st.sidebar.title("📚 Navigation")
     section = st.sidebar.radio(
-        "Elige una sección:",
+        "Choose a section:",
         (
-            "Inicio",
-            "Hábito 1",
-            "Hábito 2",
-            "Hábito 3",
-            "Hábito 4",
-            "Hábito 5",
-            "Hábito 6",
-            "Hábito 7",
-            "Evidencia de colaboración",
-            "Autoevaluación"
+            "Home",
+            "Habit 1",
+            "Habit 2",
+            "Habit 3",
+            "Habit 4",
+            "Habit 5",
+            "Habit 6",
+            "Habit 7",
+            "Collaboration evidence",
+            "Self-assessment"
         )
     )
 
     st.sidebar.markdown("---")
-    st.sidebar.markdown("**Equipo:** Juan Pablo · Alejandro · Mateo")
-    st.sidebar.caption("Recurso digital creado para mostrar el crecimiento del equipo como futuros líderes.")
+    st.sidebar.markdown("**Team:** Juan Pablo · Alejandro · Mateo")
+    st.sidebar.caption("Digital resource created to show the team's growth as future leaders.")
 
-    if section == "Inicio":
+    if section == "Home":
         render_home()
-    elif section.startswith("Hábito"):
+    elif section.startswith("Habit"):
         num = int(section.split(" ")[1])
         render_habit(num)
-    elif section == "Evidencia de colaboración":
+    elif section == "Collaboration evidence":
         render_evidence()
-    elif section == "Autoevaluación":
+    elif section == "Self-assessment":
         render_self_assessment()
-
 
 if __name__ == "__main__":
     main()
