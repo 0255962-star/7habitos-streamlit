@@ -16,7 +16,6 @@ CUSTOM_CSS = """
     background: linear-gradient(135deg, #f9fafb 0%, #e0f4ff 40%, #fef3c7 100%);
 }
 
-/* Card container */
 .habit-card {
     background-color: #ffffffcc;
     padding: 1.7rem;
@@ -26,7 +25,6 @@ CUSTOM_CSS = """
     border: 1px solid rgba(148, 163, 184, 0.2);
 }
 
-/* Badges */
 .badge {
     display: inline-block;
     padding: 0.25rem 0.75rem;
@@ -39,12 +37,10 @@ CUSTOM_CSS = """
     margin-right: 0.4rem;
 }
 
-/* Titles */
 h1, h2, h3 {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* Timeline */
 .timeline-dot {
     width: 14px;
     height: 14px;
@@ -54,14 +50,12 @@ h1, h2, h3 {
     margin-right: 8px;
 }
 
-/* Highlight */
 .highlight {
     background: #fef9c3;
     padding: 0.15rem 0.4rem;
     border-radius: 0.4rem;
 }
 
-/* Metrics */
 .metric-box {
     background: #0f172a;
     color: white;
@@ -70,7 +64,6 @@ h1, h2, h3 {
     text-align: center;
 }
 
-/* Sticker-like note */
 .sticker {
     background: #f1f5f9;
     border-radius: 0.8rem;
@@ -84,31 +77,21 @@ st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 # ---------------- HELPERS ----------------
 def show_image(image_name: str):
-    """
-    Looks for the image in the SAME FOLDER as app.py.
-    Example: habito1_proactivo.png
-    """
+    """Display an image from the same folder as app.py."""
     img_path = Path(image_name)
     if img_path.is_file():
         st.image(str(img_path), use_column_width=True)
     else:
-        st.info(
-            f"🖼️ Upload a file named `{image_name}` to the root of the repo to display the image here."
-        )
+        st.info(f"🖼️ Upload `{image_name}` to the root of the repo to display it here.")
 
 
 def show_audio(audio_name: str):
-    """
-    Looks for the audio file in the SAME FOLDER as app.py.
-    Example: audiohabito1.m4a
-    """
+    """Display an audio player for a file from the same folder as app.py."""
     audio_path = Path(audio_name)
     if audio_path.is_file():
         st.audio(str(audio_path))
     else:
-        st.info(
-            f"🎧 Upload a file named `{audio_name}` to the root of the repo to play the audio here."
-        )
+        st.info(f"🎧 Upload `{audio_name}` to the root of the repo to play it here.")
 
 
 # ---------------- HABITS CONTENT ----------------
@@ -120,19 +103,17 @@ habits = {
         "explicacion": (
             "Being proactive means taking responsibility for what we do and consciously deciding how "
             "to act in each situation. Proactive people do not wait for someone else to solve their "
-            "problems; they take initiative and look for solutions without excuses. "
-            "This habit is about choosing a positive attitude even in the face of difficulties."
+            "problems; they take initiative and look for solutions without excuses."
         ),
         "ejemplo": (
             "During the first weeks of the project, the team struggled to coordinate schedules. "
-            "Juan Pablo decided not to wait for the professor to intervene: he created an online group "
-            "to organize meetings and proposed a weekly calendar. His initiative helped the team regain "
-            "its work rhythm and improve communication."
+            "Juan Pablo created an online group and proposed a weekly calendar so everyone could "
+            "organize meetings more easily and keep the project moving."
         ),
         "conexion": (
-            "This habit is directly related to responsibility, self-management, and proactive leadership. "
-            "In management, a proactive person identifies problems before they escalate and acts without "
-            "waiting for orders."
+            "This habit is related to responsibility, self-management, and proactive leadership. "
+            "In management, being proactive means detecting problems early and acting without waiting "
+            "for someone else to give the order."
         ),
         "keywords": ["Responsibility", "Initiative", "Self-management"]
     },
@@ -142,18 +123,16 @@ habits = {
         "image": "habito2_fin_en_mente.png",
         "explicacion": (
             "This habit means having a clear vision of where you want to go. It implies planning based on "
-            "long-term goals and aligning daily actions with that purpose. A person who begins with the "
-            "end in mind knows what they want to achieve and acts with focus."
+            "long-term goals and aligning daily actions with that purpose."
         ),
         "ejemplo": (
-            "From the very beginning, Alejandro suggested that the group's goal should be to deliver a project "
-            "that not only met the requirements but also stood out for its creativity. To achieve this, he "
-            "designed a work plan with weekly goals, progress reviews, and defined roles. This vision helped "
-            "the team stay focused until the end."
+            "From the beginning, Alejandro suggested that the goal of the group was to deliver a project "
+            "that not only met the requirements but also stood out for its creativity. He proposed weekly "
+            "goals, progress reviews, and clear roles."
         ),
         "conexion": (
-            "It develops strategic planning, future vision, and results orientation—essential skills for any "
-            "leader or manager who wants to successfully guide projects."
+            "It develops strategic planning, future vision, and results orientation—essential skills for "
+            "any leader or manager who wants to guide projects successfully."
         ),
         "keywords": ["Vision", "Strategic planning", "Results"]
     },
@@ -163,18 +142,16 @@ habits = {
         "image": "habito3_primero_lo_primero.png",
         "explicacion": (
             "This habit is about prioritizing what is most important instead of getting distracted by what is "
-            "merely urgent or trivial. It is based on time management and personal discipline. It means focusing "
-            "on activities that truly contribute to the final objective."
+            "urgent or trivial. It is based on time management and personal discipline."
         ),
         "ejemplo": (
-            "As the deadline approached, Mateo noticed that some teammates wanted to spend time on visual "
-            "details before finishing the research. He suggested focusing first on completing the main content "
-            "and then refining the presentation. That decision allowed them to meet the deadline without "
-            "sacrificing quality."
+            "As the deadline approached, some teammates wanted to focus on visual details before finishing the "
+            "research. Mateo suggested completing the main content first and then refining the slides, which "
+            "allowed the team to deliver on time without losing quality."
         ),
         "conexion": (
-            "It reinforces organization, time management, and efficiency in decision-making—key competencies "
-            "for leading projects and work teams."
+            "It reinforces organization, time management, and efficiency in decision-making—key skills for "
+            "leading projects and work teams."
         ),
         "keywords": ["Priorities", "Time management", "Discipline"]
     },
@@ -183,19 +160,17 @@ habits = {
         "icon": "🤝",
         "image": "habito4_ganar_ganar.png",
         "explicacion": (
-            "This habit means seeking solutions in which everyone involved benefits. It is not about competing, "
-            "but about collaborating with an abundance mindset: believing that one person's success does not mean "
-            "another's failure."
+            "Think Win–Win means seeking solutions where everyone involved benefits. It is not about competing "
+            "against others but collaborating with an abundance mindset."
         ),
         "ejemplo": (
-            "At one point in the project, there was disagreement about who should deliver the final presentation. "
-            "Juan Pablo suggested that each member present a part according to their strengths: Alejandro handled "
-            "the introduction, he presented the technical section, and Mateo presented the conclusions. In this "
-            "way, everyone participated and felt valued."
+            "There was a disagreement about who should give the final presentation. Juan Pablo suggested that "
+            "each member present the part that matched their strengths: Alejandro the introduction, Juan Pablo "
+            "the technical section, and Mateo the conclusions."
         ),
         "conexion": (
-            "It is connected to effective negotiation, empathy, and collaborative management—crucial qualities for "
-            "maintaining balanced work relationships and motivated teams."
+            "This habit is connected to negotiation, empathy, and collaborative management, which are essential "
+            "for maintaining healthy professional relationships and motivated teams."
         ),
         "keywords": ["Collaboration", "Negotiation", "Empathy"]
     },
@@ -204,19 +179,17 @@ habits = {
         "icon": "👂",
         "image": "habito5_entender.png",
         "explicacion": (
-            "This habit teaches that before expressing your point of view, you should truly listen to others. "
-            "Empathic listening builds trust and mutual understanding. Only when we understand other perspectives "
-            "can we effectively communicate our own."
+            "This habit teaches us to listen carefully before trying to explain our own point of view. "
+            "Empathic listening builds trust and mutual understanding."
         ),
         "ejemplo": (
-            "In one meeting, Alejandro and Mateo had opposite opinions about the focus of the project. "
-            "Juan Pablo suggested that each of them explain their point without interruptions and that they then "
-            "look for common ground. Thanks to that active listening, they were able to integrate both ideas into "
-            "a more complete proposal."
+            "Alejandro and Mateo had different ideas about the focus of the project. Juan Pablo proposed that "
+            "each of them explain their view without interruptions. After listening, they combined the best "
+            "parts of both ideas into a stronger final concept."
         ),
         "conexion": (
-            "It strengthens empathic communication, conflict resolution, and emotional intelligence—essential "
-            "competencies for leading diverse teams and maintaining a healthy work environment."
+            "It strengthens empathic communication, conflict resolution, and emotional intelligence—key "
+            "competencies for leading diverse teams."
         ),
         "keywords": ["Listening", "Empathy", "Conflict resolution"]
     },
@@ -225,18 +198,16 @@ habits = {
         "icon": "🧩",
         "image": "habito6_sinergia.png",
         "explicacion": (
-            "Synergy occurs when individual strengths are combined to produce results that no one could achieve "
-            "alone. It means valuing differences, respecting different points of view, and working in a "
-            "complementary way."
+            "Synergy happens when individual strengths are combined to produce results that no one could achieve "
+            "alone. It means valuing differences and working in a complementary way."
         ),
         "ejemplo": (
-            "Each team member contributed something different: Juan Pablo stood out in coordination and leadership, "
-            "Alejandro in planning and design, and Mateo in writing and analysis. By combining these skills, the "
-            "group produced a balanced, innovative, and well-presented project."
+            "Juan Pablo focused on coordination and leadership, Alejandro on planning and design, and Mateo on "
+            "writing and analysis. By combining their strengths, they delivered a balanced and creative project."
         ),
         "conexion": (
-            "It promotes teamwork, diversity of thought, and collective creativity—essential competencies for "
-            "innovation in any organization."
+            "Synergy promotes teamwork, diversity of thought, and collective creativity—essential ingredients "
+            "for innovation in any organization."
         ),
         "keywords": ["Teamwork", "Diversity", "Creativity"]
     },
@@ -245,34 +216,29 @@ habits = {
         "icon": "🪵",
         "image": "habito7_afilar_sierra.png",
         "explicacion": (
-            "This habit means dedicating time to self-care and continuous improvement in four areas: body, mind, "
-            "heart, and spirit. A person who does not renew themselves becomes worn out and loses motivation. "
-            "Sharpening the saw is about investing in yourself to maintain energy and balance."
+            "Sharpening the saw means taking time for self-care and continuous improvement in body, mind, "
+            "heart, and spirit. Without renewal, people burn out and lose motivation."
         ),
         "ejemplo": (
-            "After delivering the project, the group decided to meet to reflect on what they had learned and share "
-            "ideas for future work. They also planned a recreational activity together. This break and feedback "
-            "strengthened their relationship and prepared them better for new challenges."
+            "After finishing the project, the group met to reflect on what they had learned and to plan a small "
+            "recreational activity together. That pause helped them process the experience and recover energy."
         ),
         "conexion": (
-            "It reinforces resilience, adaptability, and continuous learning. A good leader not only pursues "
-            "results, but also the well-being and personal development of the team."
+            "This habit reinforces resilience, adaptability, and continuous learning. Good leaders care about "
+            "results and about the well-being of their teams."
         ),
         "keywords": ["Self-care", "Resilience", "Continuous learning"]
     }
 }
 
-texto_evidencia = (
-    "Throughout the project, the team formed by **Juan Pablo, Alejandro, and Mateo** showed "
-    "remarkable growth:\n\n"
-    "- **Beginning:** There was disorganization and difficulty coordinating schedules.\n"
-    "- **During the process:** They applied Covey's habits to improve communication and productivity. "
-    "Juan Pablo led the organization (Habit 1), Alejandro provided vision and planning (Habit 2), and "
-    "Mateo stood out for his focus and consistency (Habit 3).\n"
-    "- **Results:** They achieved real synergy (Habit 6) and learned to truly listen to each other (Habit 5).\n"
-    "- **Growth:** The group moved from being a set of individuals to a cohesive team with clear goals, "
-    "defined roles, and a high level of commitment."
-)
+texto_evidencia = """
+Throughout the project, the team formed by **Juan Pablo, Alejandro, and Mateo** showed remarkable growth:
+
+- **Beginning:** There was disorganization and difficulty coordinating schedules.
+- **During the process:** They applied Covey's habits to improve communication and productivity. Juan Pablo led the organization (Habit 1), Alejandro provided vision and planning (Habit 2), and Mateo stood out for his focus and consistency (Habit 3).
+- **Results:** They achieved real synergy (Habit 6) and learned to truly listen to each other (Habit 5).
+- **Growth:** The group moved from being a set of individuals to a cohesive team with clear goals, defined roles, and a high level of commitment.
+"""
 
 # ---------------- RENDER HABIT ----------------
 def render_habit(habit_number: int):
@@ -372,7 +338,9 @@ def render_home():
         m2.metric("Habits", "7")
         m3.metric("Format", "Web / Streamlit")
         st.write("---")
-        st.caption("Digital resource created as the final course deliverable to connect the 7 habits with managerial skills.")
+        st.caption(
+            "Digital resource created as the final course deliverable to connect the 7 habits with managerial skills."
+        )
         st.markdown("</div>", unsafe_allow_html=True)
 
     st.write("")
@@ -382,7 +350,7 @@ def render_home():
         st.markdown("**Week 1**")
         st.markdown("<span class='timeline-dot'></span> Initial disorganization", unsafe_allow_html=True)
     with t2:
-        st.markmarkdown("**Week 4**")
+        st.markdown("**Week 4**")
         st.markdown("<span class='timeline-dot'></span> Habits 1–3 in action", unsafe_allow_html=True)
     with t3:
         st.markdown("**Week 8**")
@@ -485,3 +453,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
